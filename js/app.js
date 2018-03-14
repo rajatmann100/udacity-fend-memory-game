@@ -7,7 +7,7 @@ var moves = 0;
 var match_found = 0;
 
 
-var game_started = false;
+let game_started = false;
 
 
 var timer = new Timer();
@@ -21,6 +21,7 @@ function createCard(card) {
     $('#deck').append(`<li class="card animated"><i class="fa ${card}"></i></li>`);
 }
 
+//to display cards
 function displayCards() {
     for (var i = 0; i < 2; i++) {
         cardLists = shuffle(cardLists);
@@ -28,6 +29,7 @@ function displayCards() {
     }
 }
 
+// shuffles cards on each run
 function shuffle(array) {
     var currentIndex = array.length
         , temporaryValue, randomIndex;
@@ -44,9 +46,8 @@ function shuffle(array) {
 openCards = [];
 
 
+// toggles card when clicked
 function tglCrd() {
-    
-    
     if (game_started == false) {
         game_started = true;
         timer.start();
@@ -66,6 +67,7 @@ function tglCrd() {
     }
 }
 
+//  don't let open cards be clicked again
 function disableCLick() {
     openCards.forEach(function (card) {
         card.off('click');
@@ -76,6 +78,7 @@ function enableClick() {
     openCards[0].click(tglCrd);
 }
 
+// see if card last opened match, if yes then keep them open
 function matchOpenCards() {
     if (openCards[0][0].firstChild.className == openCards[1][0].firstChild.className) {
         console.log("matchCard");
@@ -107,6 +110,7 @@ $.fn.extend({
     }
 });
 
+// victory
 function checkWin() {
     match_found += 1;
     if (match_found == 8) {
@@ -125,7 +129,7 @@ function updateMoves() {
     }
 }
 
-
+// restart the game
 function resetGame() {
     moves = 0;
     match_found = 0;
@@ -150,7 +154,7 @@ function addStars() {
     }
 }
 
-
+// main play function
 function play() {
     displayCards();
     $('.card').click(tglCrd);
@@ -158,6 +162,7 @@ function play() {
     addStars(3);
 }
 
+// show results
 function results() {
     timer.pause();
     var a = moves>23 ? "fa-star-o" : "fa-star";
@@ -171,4 +176,5 @@ function results() {
     $('#restart').click(resetGame);
 }
 
+// begining the game
 play();
